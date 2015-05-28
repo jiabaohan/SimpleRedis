@@ -111,7 +111,6 @@ namespace SimpleRedisProgram
             {
                 if (bucket.elements.Count == 1)
                 {
-                    //bucket.elements[0].key = request.destinationKey;
                     response.element = bucket.elements[0];
                 }
                 else
@@ -120,7 +119,6 @@ namespace SimpleRedisProgram
                     {
                         if (bucket.elements[i].key == request.sourceKey)
                         {
-                            //bucket.elements[i].key = request.destinationKey;
                             response.element = bucket.elements[i];
                             break;
                         }
