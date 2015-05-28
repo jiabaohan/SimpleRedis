@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B02E1CA9-B49F-42ED-BEAE-21F8F4A882E8}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SimpleRedisProgram</RootNamespace>
+    <AssemblyName>SimpleRedisProgram</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x64\Client\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Trinity.Core">
+      <HintPath>GraphEngine.Lib\Trinity.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ProgramEntry.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Redis.Core\Redis.Core.csproj">
+      <Project>{65b2fe04-596e-4aea-a596-df845117cbb8}</Project>
+      <Name>Redis.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleRedis\SimpleRedis.tproj">
+      <Project>{38134E0E-611E-4A78-90DE-5B0787714A3D}</Project>
+      <Name>SimpleRedis</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <ZipperPath>"$(TrinityPath)\Zipper.exe"</ZipperPath>
+    <GraphEnginePackageName>$(AssemblyName).DeploymentPackage</GraphEnginePackageName>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Target Name="DeployBuild">
+    <RemoveDir Directories="$(OutputPath)$(GraphEnginePackageName)" ContinueOnError="true" />
+    <MakeDir Directories="$(OutputPath)$(GraphEnginePackageName)" ContinueOnError="true" />
+    <MSBuild Projects="$(MSBuildProjectFullPath)" Properties="TrinityPath=$(TrinityPath);OutputPath=$(OutputPath)$(GraphEnginePackageName)" Targets="Build" />
+  </Target>
+  <Target Name="MakeDeploymentPackage">
+    <Exec Command="$(ZipperPath) zip &quot;$(OutputPath)$(GraphEnginePackageName)&quot; &quot;$(OutputPath)$(GraphEnginePackageName).zip&quot;" ContinueOnError="false" />
+  </Target>
+  <Target Name="BeforeBuild">
+    <Copy SourceFiles="$(TrinityPath)\Trinity.Core.dll;$(TrinityPath)\Trinity.Core.pdb" DestinationFolder="$(MSBuildProjectDirectory)\GraphEngine.Lib" ContinueOnError="true" />
+    <Copy SourceFiles="$(TrinityPath)\Trinity.Core.xml" DestinationFolder="$(MSBuildProjectDirectory)\GraphEngine.Lib" ContinueOnError="true" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

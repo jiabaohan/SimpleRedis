@@ -1,0 +1,445 @@
+Struct Value
+{
+	//Value could either be a double, string or List<int>, we'll use optional to indicate whether a field exists.
+	optional double double_value;
+	optional string string_value;
+	optional List<int> int_list_value;
+}
+
+Struct Element
+{
+	Value value;
+	string key;
+}
+
+Cell Struct Bucket
+{
+	List<Element> elements;	
+}
+
+Struct StringRequest
+{
+	string key;
+}
+
+Struct ValueResponse
+{
+	bool isFound;
+	Value value;
+}
+
+struct DelResponse
+{
+	int count;
+}
+
+Struct ElementRequest
+{
+	Element element;
+}
+
+struct ReNameRequest
+{
+	string sourceKey;
+	string destinationKey;	
+}
+
+struct ReNameResponse
+{
+	Element element;		
+}
+
+struct AppendRequest
+{
+	string key;
+	string value;	
+}
+
+struct SetRangeRequest
+{
+	int offset;
+	string key;
+	string value;	
+}
+
+struct GetRangeRequest
+{
+	int start;
+	int end;
+	string key;	
+}
+
+struct GetRangeResponse
+{
+	string value;	
+}
+
+struct IncrRequest
+{
+	string key;	
+}
+
+struct  IncrResponse
+{
+	double value;	
+}
+
+struct DecrRequest
+{
+	string key;	
+}
+
+struct  DecrResponse
+{
+	double value;	
+}
+
+struct IncrByRequest
+{
+	double increment;	
+	string key;
+}
+
+struct  IncrByResponse
+{
+	double value;	
+}
+
+struct DecrByRequest
+{
+	double decrement;	
+	string key;
+}
+
+struct  DecrByResponse
+{
+	double value;	
+}
+
+struct LRemRequest
+{
+	int count;
+	int value;	
+	string key;
+}
+
+struct LRemResponse
+{
+	int delNum;
+}
+
+struct RPushRequest
+{
+	string key;
+	List<int> value;	
+}
+
+struct RPushResponse
+{
+	int listLength;	
+	string strValue;
+}
+
+struct RPopRequest
+{
+	string key;	
+}
+
+struct RPopResponse
+{
+	int value;
+	string strValue;	
+}
+
+struct LPopRequest
+{
+	string key;	
+}
+
+struct LPopResponse
+{
+	int value;	
+	string strValue;
+}
+
+struct LSetRequest
+{
+	int index;
+	int value;
+	string key;	
+}
+
+struct LSetResponse
+{
+	string message;	
+}
+
+struct RPushXRequest
+{
+	int value;
+	string key;	
+}
+
+struct RPushXResponse
+{
+	int listLength;	
+}
+
+struct LPushRequest
+{
+	string key;
+	List<int> value;	
+}
+
+struct LPushResponse
+{
+	int listLength;
+	string strValue;	
+}
+
+struct LTrimRequest
+{
+	int start;
+	int stop;
+	string key;	
+}
+
+struct LTrimResponse
+{
+	string message;
+}
+
+struct LIndexRequest
+{
+	int index;
+	string key;	
+}
+
+struct LIndexResponse
+{
+	int value;
+	string strValue;	
+}
+
+struct LPushXRequest
+{
+	int value;
+	string key;	
+}
+
+struct LPushXResponse
+{
+	int listLength;	
+}
+
+struct LInsertRequest
+{
+	int pivot;
+	int value;
+	string key;
+	string bORa;	
+}
+
+struct LInsertResponse
+{
+	string listLength;	
+}
+
+struct LRangeRequest
+{
+	int start;
+	int stop;
+	string key;	
+}
+
+struct LRangeResponse
+{
+	List<int> valueList;	
+}
+
+protocol GetValue
+{
+    Type: Syn;
+	Request: StringRequest;
+	Response: ValueResponse;
+}
+
+protocol DelKey
+{
+	Type: Syn;
+	Request: StringRequest;
+	Response: DelResponse;
+}
+
+protocol SetValue
+{
+	Type:Syn;
+	Request: ElementRequest;
+	Response:void;
+}
+
+protocol ReNameKey
+{
+	Type:Syn;
+	Request:ReNameRequest;
+	Response:ReNameResponse;	
+}
+protocol Append
+{
+	Type:Asyn;
+	Request:AppendRequest;
+	Response:void;	
+}	
+
+protocol SetRange
+{
+	Type:Asyn;
+	Request:SetRangeRequest;
+	Response:void;	
+}
+
+protocol GetRange
+{
+	Type:Syn;
+	Request:GetRangeRequest;
+	Response:GetRangeResponse;	
+}
+
+protocol Incr
+{
+	Type:Syn;
+	Request:IncrRequest;
+	Response:IncrResponse;	
+}
+
+protocol Decr
+{
+	Type:Syn;
+	Request:DecrRequest;
+	Response:DecrResponse;	
+}
+
+protocol IncrBy
+{
+	Type:Syn;
+	Request:IncrByRequest;
+	Response:IncrByResponse;	
+}
+
+protocol DecrBy
+{
+	Type:Syn;
+	Request:DecrByRequest;
+	Response:DecrByResponse;		
+}
+
+protocol LRem
+{
+	Type:Syn;
+	Request:LRemRequest;
+	Response:LRemResponse;	
+}
+
+protocol RPush
+{
+	Type:Syn;
+	Request:RPushRequest;
+	Response:RPushResponse;	
+}
+
+protocol RPop
+{
+	Type:Syn;
+	Request:RPopRequest;
+	Response:RPopResponse;	
+}
+
+protocol LPop
+{
+	Type:Syn;
+	Request:LPopRequest;
+	Response:LPopResponse;	
+}
+
+protocol LSet
+{
+	Type:Syn;
+	Request:LSetRequest;
+	Response:LSetResponse;	
+}
+
+protocol RPushX
+{
+	Type:Syn;
+	Request:RPushXRequest;
+	Response:RPushXResponse;	
+}
+
+protocol LPush
+{
+	Type:Syn;
+	Request:LPushRequest;
+	Response:LPushResponse;	
+}
+
+protocol LTrim
+{
+	Type:Syn;
+	Request:LTrimRequest;
+	Response:LTrimResponse;	
+}
+
+protocol LIndex
+{
+	Type:Syn;
+	Request:LIndexRequest;
+	Response:LIndexResponse;	
+}
+
+protocol LPushX
+{
+	Type:Syn;
+	Request:LPushXRequest;
+	Response:LPushXResponse;	
+}
+
+protocol LInsert
+{
+	Type:Syn;
+	Request:LInsertRequest;
+	Response:LInsertResponse;	
+}
+
+protocol LRange
+{
+	Type:Syn;
+	Request:LRangeRequest;
+	Response:LRangeResponse;	
+}
+
+server RedisServer
+{
+	protocol SetValue;
+	protocol GetValue;
+	protocol DelKey;
+	protocol ReNameKey;
+	protocol Append;
+	protocol SetRange;
+	protocol GetRange;
+	protocol Incr;
+	protocol Decr;
+	protocol IncrBy;
+	protocol DecrBy;
+	protocol LRem;
+	protocol RPush;
+	protocol RPop;
+	protocol LPop;
+	protocol LSet;
+	protocol RPushX;
+	protocol LPush;
+	protocol LTrim;
+	protocol LIndex;
+	protocol LPushX;
+	protocol LInsert;
+	protocol LRange;
+}
